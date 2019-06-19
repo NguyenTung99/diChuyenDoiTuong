@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>di chuyển đối tượng</title>
+</head>
+<body>
+
+<div id="game"></div>
+<script>
+
+
+    // Thay thế ảnh nhân vật bằng một ảnh khác
+    // Thêm thuộc tính speed (tốc độ) cho đối tượng Hero (tốc độ hiện tại đang được để cố định là 20)
+    // Viết thêm các hàm để nhân vật có thể di chuyển xung quanh màn hình
+
+
+    function Hero(image, top, left, size) {
+        this.image = image;
+        this.top = top;
+        this.left = left;
+        this.size = size;
+        this.speed = 100;
+
+        this.getHeroElement = function () {
+            return '< img width="' + this.size + '"' +
+                ' height="' + this.size + '"' +
+                ' src="' + this.image + '"' +
+                ' style="top: ' + this.top + 'px; left:' + this.left + 'px;position:absolute;" />';
+        };
+
+        this.moveRight = function () {
+            this.left += this.speed;
+            console.log('ok: ' + this.left);
+        };
+        this.moveDown = function () {
+            this.top += this.speed;
+            console.log('ok: ' + this.top);
+        };
+        this.moveLeft = function () {
+            this.left -= this.speed;
+            console.log('ok: ' + this.left);
+        };
+        this.moveUp = function () {
+            this.top -= this.speed;
+            console.log('ok: ' + this.top);
+        };
+
+    }
+
+    let hero = new Hero('SonGoKu.png', 20, 30, 300);
+
+    function start() {
+        if (hero.left < window.innerWidth - hero.size) {
+            if (hero.top === 20) {
+                hero.moveRight();
+            }
+        } else if (hero.top < window.innerHeight - hero.size) {
+            hero.moveDown();
+        }
+        if (hero.top >= window.innerHeight - hero.size && hero.left >= 130) {
+            hero.moveLeft();
+        }
+        if (hero.top >= 120 && hero.left === 30) {
+            hero.moveUp();
+        }
+
+        document.getElementById('game').innerHTML = hero.getHeroElement();
+        setTimeout(start, 100);
+
+    }
+
+    start();
+
+
+</script>
+</body>
+</html>
